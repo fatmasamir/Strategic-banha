@@ -20,8 +20,8 @@ import VsudProgress from "@/components/VsudProgress.vue";
 import { useI18n } from "vue-i18n";
 import VsudButton from "@/components/VsudButton.vue";
 import { ref } from "vue";
-import Swal from "sweetalert2";
 import { useRouter } from "vue-router";
+import Swal from "sweetalert2";
 
 export default {
   name: "ProjectsTable",
