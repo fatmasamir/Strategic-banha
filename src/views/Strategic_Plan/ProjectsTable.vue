@@ -8,96 +8,14 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
-        <table
-          class="table align-items-center justify-content-center mb-0 text-center"
-        >
-          <thead>
-            <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                {{ t("Identification_number") }}
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
-              >
-                {{ t("aim") }}
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2"
-              >
-                {{ t("Relative_weight") }}
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="Strategic in Strategic_Plan" :key="Strategic.id">
-              <td>
-                <div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">{{ Strategic.id + 1 }}</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <router-link :to="'/strategic_plan/aim/' + Strategic.name">
-                  <p class="text-sm font-weight-bold mb-0">
-                    {{ Strategic.name }}
-                  </p></router-link
-                >
-              </td>
-              <td class="align-middle text-center">
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="mx-2 text-xs font-weight-bold">
-                    {{ Strategic.rate }}%</span
-                  >
-                  <div>
-                    <vsud-progress
-                      v-if="Strategic.rate >= 50 && Strategic.rate < 100"
-                      color="info"
-                      variant="gradient"
-                      :percentage="Strategic.rate"
-                    />
-                    <vsud-progress
-                      v-if="Strategic.rate == 100"
-                      color="success"
-                      variant="gradient"
-                      :percentage="Strategic.rate"
-                    />
-                    <vsud-progress
-                      v-if="Strategic.rate < 50"
-                      color="danger"
-                      variant="gradient"
-                      :percentage="Strategic.rate"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td class="align-middle">
-                <button
-                  to="/"
-                  class="mx-4 trash-link btn btn-link m-0 p-0"
-                  @click="showAlert"
-                >
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-                <router-link
-                  :to="'/departments/edit-department/' + Strategic.id"
-                  class="edit-link m-0 p-0"
-                >
-                  <i class="fa fa-edit" aria-hidden="true"></i>
-                </router-link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <Table :StrategicPlan="Strategic_Plan" @DeleteItem="DeleteItem" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Table from "./Table/index.vue";
 import VsudProgress from "@/components/VsudProgress.vue";
 import { useI18n } from "vue-i18n";
 import VsudButton from "@/components/VsudButton.vue";
@@ -110,6 +28,7 @@ export default {
   components: {
     VsudProgress,
     VsudButton,
+    Table,
   },
   setup() {
     const { t } = useI18n();
@@ -135,17 +54,53 @@ export default {
         name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
         rate: 70,
       },
+      {
+        id: 4,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 5,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 6,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 7,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 8,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 9,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
+      {
+        id: 10,
+        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
+        rate: 70,
+      },
     ]);
     const GoAdd = () => {
       router.push("/departments/add-department");
     };
-    const showAlert = () => {
+    const DeleteItem = (itemId) => {
+      console.log("itemId", itemId);
       Swal.fire({
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        title: "هل تريد حذف العنصر !",
+        title: "هل تريد حذف العنصر !" + itemId,
         confirmButtonText: "حذف",
         cancelButtonText: "إلغاء",
       }).then((result) => {
@@ -157,7 +112,7 @@ export default {
         }
       });
     };
-    return { t, Strategic_Plan, showAlert, GoAdd };
+    return { t, Strategic_Plan, DeleteItem, GoAdd };
   },
 };
 </script>
