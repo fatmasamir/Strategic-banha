@@ -52,7 +52,7 @@ const DeleteItemfunc = (index) => {
 </script>
 
 <template>
-  <div v-if="props.StrategicPlan.length !== 0">
+  <div>
     <table-lite
       :is-static-mode="true"
       :columns="table.columns"

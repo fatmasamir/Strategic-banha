@@ -26,5 +26,6 @@
   "Department": "إدارة",
   "editDepartment": "تعديل إدارة",
   "Strategic_objective": "الهدف الاستراتيجي",
-  "control": "النشاط"
+  "control": "النشاط",
+  "notFound": "لا يوجد عناصر"
 }

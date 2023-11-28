@@ -361,10 +361,8 @@
       <div class="vtl-row" v-else>
         <div class="vtl-empty-msg col-sm-12 text-center">
           <div class="dont-have">
-            <!-- <img
-              src="@/assets/images/global/icons/dontHave/dont-have-file.svg"
-            /> -->
-            <h6>{{ t("notFound") }}</h6>
+            <img src="@/assets/img/dont-have-file.svg" />
+            <p>{{ t("notFound") }}</p>
           </div>
         </div>
       </div>
