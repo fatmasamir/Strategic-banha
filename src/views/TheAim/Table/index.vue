@@ -5,7 +5,7 @@ import TableLite from "@/components/TableLite/index.vue";
 import VsudProgress from "@/components/VsudProgress.vue";
 const { t } = useI18n();
 
-const props = defineProps(["StrategicPlan"]);
+const props = defineProps(["AimList", "name"]);
 let emit = defineEmits(["DeleteItem"]);
 const table = reactive({
   columns: [
@@ -17,7 +17,7 @@ const table = reactive({
       isKey: true,
     },
     {
-      label: t("aim"),
+      label: t("Strategic_objective"),
       field: "name",
       sortable: true,
     },
@@ -33,7 +33,7 @@ const table = reactive({
     },
   ],
   totalRecordCount: computed(() => {
-    return props.StrategicPlan.length;
+    return props.AimList.length;
   }),
   sortable: {
     order: "id",
@@ -56,18 +56,16 @@ const DeleteItemfunc = (index) => {
     <table-lite
       :is-static-mode="true"
       :columns="table.columns"
-      :rows="props.StrategicPlan"
+      :rows="props.AimList"
       :total="table.totalRecordCount"
       :sortable="table.sortable"
       :is-slot-mode="true"
     >
       <template v-slot:id="data">{{ data.value.id + 1 }} </template>
       <template v-slot:name="data">
-        <router-link :to="'/strategic_plan/aim/' + data.value.name">
-          <p class="text-sm font-weight-bold mb-0">
-            {{ data.value.name }}
-          </p></router-link
-        >
+        <p class="text-sm font-weight-bold mb-0">
+          {{ data.value.name }}
+        </p>
       </template>
       <template v-slot:rate="data">
         <div class="align-middle text-center">
@@ -107,7 +105,9 @@ const DeleteItemfunc = (index) => {
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
         <router-link
-          :to="'/strategic_plan/edit-strategic/' + data.value.id"
+          :to="
+            '/strategic_plan/aim/' + props.name + '/edit-aim/' + data.value.id
+          "
           class="edit-link m-0 p-0"
         >
           <i class="fa fa-edit" aria-hidden="true"></i> </router-link></template

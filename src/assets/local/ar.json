@@ -27,5 +27,9 @@
   "editDepartment": "تعديل إدارة",
   "Strategic_objective": "الهدف الاستراتيجي",
   "control": "النشاط",
-  "notFound": "لا يوجد عناصر"
+  "notFound": "لا يوجد عناصر",
+  "AddStrategic_Plan": "إضافه خطه إستراتيجه",
+  "editStrategic_Plan": "تعديل خطه إستراتيجه",
+  "EditAim": "تعديل الغاية",
+  "AddAim": "إضافه الغاية"
 }

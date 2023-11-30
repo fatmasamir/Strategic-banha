@@ -2,114 +2,78 @@
   <div class="card mb-5 mt-4">
     <div class="card-header pb-0 d-flex w-100">
       <h6 class="main-color">{{ t("Implementing_agencies") }}</h6>
-      <vsud-button @click="GoAdd" variant="gradient" color="success"
-        >إضافه</vsud-button
-      >
+      <div>
+        <div class="m-2 search_div">
+          <vsud-input
+            type="text"
+            :placeholder="t('Search')"
+            name="Search"
+            @input="searchmovie"
+          /><i class="fa fa-search"></i>
+        </div>
+        <vsud-button @click="GoAdd" variant="gradient" color="success"
+          >إضافه</vsud-button
+        >
+      </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
-      <div class="table-responsive p-0">
-        <table
-          class="table align-items-center justify-content-center mb-0 text-center"
-        >
-          <thead>
-            <tr>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                #
-              </th>
-              <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                {{ t("Departments") }}
-              </th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="Strategic in Strategic_Plan" :key="Strategic.id">
-              <td>
-                <div>
-                  <div class="my-auto">
-                    <h6 class="mb-0 text-sm">{{ Strategic.id + 1 }}</h6>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <router-link :to="'/strategic_plan/aim/' + Strategic.name">
-                  <p class="text-sm font-weight-bold mb-0">
-                    {{ Strategic.name }}
-                  </p></router-link
-                >
-              </td>
-              <td class="align-middle">
-                <button
-                  to="/"
-                  class="mx-4 trash-link btn btn-link m-0 p-0"
-                  @click="showAlert"
-                >
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-                <router-link
-                  :to="'/departments/edit-department/' + Strategic.id"
-                  class="edit-link m-0 p-0"
-                >
-                  <i class="fa fa-edit" aria-hidden="true"></i>
-                </router-link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <Table :Departments="Departments" @DeleteItem="DeleteItem" />
     </div>
   </div>
 </template>
 
 <script>
+import Table from "./Table/index.vue";
+import VsudInput from "@/components/VsudInput.vue";
 import { useI18n } from "vue-i18n";
-import { ref } from "vue";
 import VsudButton from "@/components/VsudButton.vue";
-import { useToast } from "vue-toastification";
-import Swal from "sweetalert2";
+import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
+import Swal from "sweetalert2";
 
 export default {
   name: "ProjectsTable",
   components: {
     VsudButton,
+    Table,
+    VsudInput,
   },
   setup() {
     const { t } = useI18n();
-    const toast = useToast();
     const router = useRouter();
-    const Strategic_Plan = ref([
+    const Departments = ref([
       {
         id: 0,
-        name: "شبكه المعلومات الرقميه بالجامعة",
+        Department: "إداره 1",
       },
       {
         id: 1,
-        name: "شبكه المعلومات الرقميه بالجامعة",
+        Department: "إداره 2",
       },
       {
         id: 2,
-        name: "شبكه المعلومات الرقميه بالجامعة",
+        Department: "إداره 3",
       },
       {
         id: 3,
-        name: "شبكه المعلومات الرقميه بالجامعة",
+        Department: "إداره 4",
+      },
+      {
+        id: 4,
+        Department: "إداره 5",
       },
     ]);
     const GoAdd = () => {
-      router.push("/departments/add-department");
+      router.push("/Departments/add-department");
     };
-    const showAlert = () => {
+    const DeleteItem = (itemId) => {
+      console.log("itemId", itemId);
       Swal.fire({
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        title: "هل تريد حذف العنصر !",
+        title: "هل تريد حذف العنصر !" + itemId,
         confirmButtonText: "حذف",
         cancelButtonText: "إلغاء",
       }).then((result) => {
@@ -121,15 +85,51 @@ export default {
         }
       });
     };
-    return { t, Strategic_Plan, toast, showAlert, GoAdd };
+    let ComifallDepartments = ref([]);
+    const searchmovie = (e) => {
+      let newDepartments = ref([]);
+      let customer = e.target.value;
+      if (customer) {
+        console.log("ComifallDepartments.value", ComifallDepartments.value);
+        ComifallDepartments.value.filter((item) => {
+          if (item.name.toLowerCase().indexOf(customer.toLowerCase()) != -1) {
+            newDepartments.value.push(item);
+            console.log("item", item);
+          }
+        });
+        Departments.value = newDepartments.value;
+      } else Departments.value = ComifallDepartments.value;
+    };
+    onMounted(() => {
+      ComifallDepartments.value = Departments.value;
+    });
+    // watch(Departments, (value) => {
+    //   console.log("Departments", value);
+    //   allRepositories.value = value.brand;
+    //   ComifallRepositories.value = value.brand;
+    // });
+    return { t, Departments, DeleteItem, GoAdd, searchmovie };
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .card .card-header {
   justify-content: space-between;
   display: flex;
   align-items: center;
   width: 100% !important;
+}
+.card .card-header {
+  .search_div {
+    display: inline-block;
+    position: relative;
+    width: 280px;
+    i {
+      position: absolute;
+      top: 15px;
+      left: 10px;
+      color: rgba(0, 0, 0, 0.156);
+    }
+  }
 }
 </style>

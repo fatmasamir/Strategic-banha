@@ -113,7 +113,7 @@ export default {
       },
     ]);
     const GoAdd = () => {
-      router.push("/departments/add-department");
+      router.push("/strategic_plan/add-strategic");
     };
     const DeleteItem = (itemId) => {
       console.log("itemId", itemId);

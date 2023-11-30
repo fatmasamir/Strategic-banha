@@ -5,7 +5,7 @@ import TableLite from "@/components/TableLite/index.vue";
 import VsudProgress from "@/components/VsudProgress.vue";
 const { t } = useI18n();
 
-const props = defineProps(["StrategicPlan"]);
+const props = defineProps(["Departments"]);
 let emit = defineEmits(["DeleteItem"]);
 const table = reactive({
   columns: [
@@ -17,13 +17,8 @@ const table = reactive({
       isKey: true,
     },
     {
-      label: t("aim"),
-      field: "name",
-      sortable: true,
-    },
-    {
-      label: t("Relative_weight"),
-      field: "rate",
+      label: t("Departments"),
+      field: "Department",
       sortable: true,
     },
     {
@@ -33,7 +28,7 @@ const table = reactive({
     },
   ],
   totalRecordCount: computed(() => {
-    return props.StrategicPlan.length;
+    return props.Departments.length;
   }),
   sortable: {
     order: "id",
@@ -56,47 +51,16 @@ const DeleteItemfunc = (index) => {
     <table-lite
       :is-static-mode="true"
       :columns="table.columns"
-      :rows="props.StrategicPlan"
+      :rows="props.Departments"
       :total="table.totalRecordCount"
       :sortable="table.sortable"
       :is-slot-mode="true"
     >
       <template v-slot:id="data">{{ data.value.id + 1 }} </template>
       <template v-slot:name="data">
-        <router-link :to="'/strategic_plan/aim/' + data.value.name">
-          <p class="text-sm font-weight-bold mb-0">
-            {{ data.value.name }}
-          </p></router-link
-        >
-      </template>
-      <template v-slot:rate="data">
-        <div class="align-middle text-center">
-          <div class="d-flex align-items-center justify-content-center">
-            <span class="mx-2 text-xs font-weight-bold">
-              {{ data.value.rate }}%</span
-            >
-            <div class="progress">
-              <vsud-progress
-                v-if="data.value.rate >= 50 && data.value.rate < 100"
-                color="yellow"
-                variant="gradient"
-                :percentage="data.value.rate"
-              />
-              <vsud-progress
-                v-if="data.value.rate == 100"
-                color="success"
-                variant="gradient"
-                :percentage="data.value.rate"
-              />
-              <vsud-progress
-                v-if="data.value.rate < 50"
-                color="danger"
-                variant="gradient"
-                :percentage="data.value.rate"
-              />
-            </div>
-          </div>
-        </div>
+        <p class="text-sm font-weight-bold mb-0">
+          {{ data.value.name }}
+        </p>
       </template>
       <template v-slot:control="data">
         <button
@@ -107,7 +71,7 @@ const DeleteItemfunc = (index) => {
           <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
         <router-link
-          :to="'/strategic_plan/edit-strategic/' + data.value.id"
+          :to="'/Departments/edit-department/' + data.value.id"
           class="edit-link m-0 p-0"
         >
           <i class="fa fa-edit" aria-hidden="true"></i> </router-link></template

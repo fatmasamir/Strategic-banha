@@ -8,7 +8,9 @@ import Rtl from "@/views/Rtl.vue";
 import SignIn from "@/views/SignIn.vue";
 import SignUp from "@/views/SignUp.vue";
 import Strategic_Plan from "@/views/Strategic_Plan/index.vue";
+import FormStrategic_Plan from "@/views/Strategic_Plan/Form.vue";
 import TheAim from "@/views/TheAim/index.vue";
+import FormTheAim from "@/views/TheAim/Form.vue";
 import Completion_reports from "@/views/Completion_reports/index.vue";
 import User_management from "@/views/User_management/index.vue";
 import Indicator_management from "@/views/Indicator_management/index.vue";
@@ -36,8 +38,33 @@ const routes = [
       },
       {
         path: "aim/:name",
-        name: "aim",
-        component: TheAim,
+        children: [
+          {
+            path: "",
+            name: "aim",
+            component: TheAim,
+          },
+          {
+            path: "add-aim",
+            name: "AddAim",
+            component: FormTheAim,
+          },
+          {
+            path: "edit-aim/:id",
+            name: "EditAim",
+            component: FormTheAim,
+          },
+        ],
+      },
+      {
+        path: "add-strategic",
+        name: "AddStrategic_Plan",
+        component: FormStrategic_Plan,
+      },
+      {
+        path: "edit-strategic/:id",
+        name: "editStrategic_Plan",
+        component: FormStrategic_Plan,
       },
     ],
   },
