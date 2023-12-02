@@ -10,6 +10,7 @@ import "vue-toastification/dist/index.css";
 import i18n from "./plugins/i18n";
 import VueSweetalert2 from "vue-sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
+import breadcrumbs from "vue-3-breadcrumbs";
 // pinia
 import { createPinia } from "pinia";
 //pinia
@@ -25,4 +26,8 @@ createApp(App)
   .use(VueSweetalert2)
   .use(SoftUIDashboard)
   .use(i18n)
+  .use(breadcrumbs, {
+    includeComponent: false, // {boolean} [includeComponent=false] - Include global breadcrumbs component or not
+  })
+
   .mount("#app");

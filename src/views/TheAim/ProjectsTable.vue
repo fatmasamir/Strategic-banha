@@ -18,20 +18,12 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
-        <Table :AimList="AimList" @DeleteItem="DeleteItem" :name="name" />
+        <Table
+          :AimList="TheAim.AimList"
+          @DeleteItem="DeleteItem"
+          :name="name"
+        />
       </div>
-      <!-- <div class="text-center" v-else>
-        <div class="card mt-3">
-          <div class="card-body">
-            <div
-              class="spinner-border text-success"
-              style="width: 30px; height: 30px; margin: 20px"
-              role="status"
-            ></div>
-          </div>
-        </div>
-      </div> -->
-      <!-- <div class="NotFound" v-else>NotFound ..</div> -->
     </div>
   </div>
 </template>
@@ -45,6 +37,7 @@ import VsudButton from "@/components/VsudButton.vue";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import { UseAimList } from "@/store/Aim/index.js";
 
 export default {
   name: "ProjectsTable",
@@ -55,66 +48,10 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const TheAim = UseAimList();
     const route = useRoute();
     const router = useRouter();
     const name = route.params.name;
-    const AimList = ref([
-      {
-        id: 0,
-        name: "طلاب 123 وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 100,
-      },
-      {
-        id: 1,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 50,
-      },
-      {
-        id: 2,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 30,
-      },
-      {
-        id: 3,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 4,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 5,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 6,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 7,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 8,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 9,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 10,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-    ]);
     const GoAdd = () => {
       router.push("/strategic_plan/aim/" + name + "/add-aim");
     };
@@ -149,18 +86,18 @@ export default {
             console.log("item", item);
           }
         });
-        AimList.value = newAimList.value;
-      } else AimList.value = ComifallAimList.value;
+        TheAim.AimList = newAimList.value;
+      } else TheAim.AimList = ComifallAimList.value;
     };
     onMounted(() => {
-      ComifallAimList.value = AimList.value;
+      ComifallAimList.value = TheAim.AimList;
     });
     // watch(AimList, (value) => {
     //   console.log("AimList", value);
     //   allRepositories.value = value.brand;
     //   ComifallRepositories.value = value.brand;
     // });
-    return { t, AimList, DeleteItem, GoAdd, searchmovie, name };
+    return { t, TheAim, DeleteItem, GoAdd, searchmovie, name };
   },
 };
 </script>

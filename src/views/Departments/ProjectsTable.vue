@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
-      <Table :Departments="Departments" @DeleteItem="DeleteItem" />
+      <Table :Departments="Departments.Departments" @DeleteItem="DeleteItem" />
     </div>
   </div>
 </template>
@@ -30,6 +30,7 @@ import VsudButton from "@/components/VsudButton.vue";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import { UseDepartments } from "@/store/Departments/index.js";
 
 export default {
   name: "ProjectsTable",
@@ -41,28 +42,7 @@ export default {
   setup() {
     const { t } = useI18n();
     const router = useRouter();
-    const Departments = ref([
-      {
-        id: 0,
-        Department: "إداره 1",
-      },
-      {
-        id: 1,
-        Department: "إداره 2",
-      },
-      {
-        id: 2,
-        Department: "إداره 3",
-      },
-      {
-        id: 3,
-        Department: "إداره 4",
-      },
-      {
-        id: 4,
-        Department: "إداره 5",
-      },
-    ]);
+    const Departments = UseDepartments();
     const GoAdd = () => {
       router.push("/Departments/add-department");
     };
@@ -97,11 +77,11 @@ export default {
             console.log("item", item);
           }
         });
-        Departments.value = newDepartments.value;
-      } else Departments.value = ComifallDepartments.value;
+        Departments.Departments = newDepartments.value;
+      } else Departments.Departments = ComifallDepartments.value;
     };
     onMounted(() => {
-      ComifallDepartments.value = Departments.value;
+      ComifallDepartments.value = Departments.Departments;
     });
     // watch(Departments, (value) => {
     //   console.log("Departments", value);

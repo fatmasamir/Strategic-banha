@@ -18,7 +18,10 @@
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
-        <Table :StrategicPlan="Strategic_Plan" @DeleteItem="DeleteItem" />
+        <Table
+          :StrategicPlan="StrategicPlanList.Strategic_Plan"
+          @DeleteItem="DeleteItem"
+        />
       </div>
       <!-- <div class="text-center" v-else>
         <div class="card mt-3">
@@ -44,6 +47,7 @@ import VsudButton from "@/components/VsudButton.vue";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import Swal from "sweetalert2";
+import { UseStrategicPlan } from "@/store/StrategicPlan/index.js";
 
 export default {
   name: "ProjectsTable",
@@ -54,64 +58,8 @@ export default {
   },
   setup() {
     const { t } = useI18n();
+    const StrategicPlanList = UseStrategicPlan();
     const router = useRouter();
-    const Strategic_Plan = ref([
-      {
-        id: 0,
-        name: "طلاب 123 وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 100,
-      },
-      {
-        id: 1,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 50,
-      },
-      {
-        id: 2,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 30,
-      },
-      {
-        id: 3,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 4,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 5,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 6,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 7,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 8,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 9,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-      {
-        id: 10,
-        name: "طلاب وخريجون متميزون وقادرون على المنافسة والابتكار",
-        rate: 70,
-      },
-    ]);
     const GoAdd = () => {
       router.push("/strategic_plan/add-strategic");
     };
@@ -149,18 +97,18 @@ export default {
             console.log("item", item);
           }
         });
-        Strategic_Plan.value = newStrategic_Plan.value;
-      } else Strategic_Plan.value = ComifallStrategic_Plan.value;
+        StrategicPlanList.Strategic_Plan = newStrategic_Plan.value;
+      } else StrategicPlanList.Strategic_Plan = ComifallStrategic_Plan.value;
     };
     onMounted(() => {
-      ComifallStrategic_Plan.value = Strategic_Plan.value;
+      ComifallStrategic_Plan.value = StrategicPlanList.Strategic_Plan;
     });
     // watch(Strategic_Plan, (value) => {
     //   console.log("Strategic_Plan", value);
     //   allRepositories.value = value.brand;
     //   ComifallRepositories.value = value.brand;
     // });
-    return { t, Strategic_Plan, DeleteItem, GoAdd, searchmovie };
+    return { t, StrategicPlanList, DeleteItem, GoAdd, searchmovie };
   },
 };
 </script>

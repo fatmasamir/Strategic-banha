@@ -6,7 +6,11 @@
     data-scroll="true"
   >
     <div class="px-3 py-1 container-fluid">
-      <breadcrumbs :current-page="currentRouteName" :text-white="textWhite" />
+      <breadcrumbs
+        :current-page="currentRouteName"
+        :currentRoutebreadcrumb="currentRoutebreadcrumb"
+        :text-white="textWhite"
+      />
       <div
         id="navbar"
         class="mt-2 collapse navbar-collapse mt-sm-0 me-md-0 me-sm-4"
@@ -30,29 +34,6 @@
               <span>تسحيل الدخول</span>
             </router-link>
           </li>
-          <!-- <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-            <a
-              id="iconNavbarSidenav"
-              href="#"
-              class="p-0 nav-link text-body"
-              @click="toggleSidebar"
-            >
-              <div class="sidenav-toggler-inner">
-                <i class="sidenav-toggler-line"></i>
-                <i class="sidenav-toggler-line"></i>
-                <i class="sidenav-toggler-line"></i>
-              </div>
-            </a>
-          </li> -->
-          <!-- <li class="px-3 nav-item d-flex align-items-center">
-            <a
-              class="p-0 nav-link"
-              :class="textWhite ? textWhite : 'text-body'"
-              @click="toggleConfigurator"
-            >
-              <i class="cursor-pointer fa fa-cog fixed-plugin-button-nav"></i>
-            </a>
-          </li> -->
         </ul>
       </div>
     </div>
@@ -62,6 +43,8 @@
 import Breadcrumbs from "../Breadcrumbs.vue";
 import { mapMutations, mapActions } from "vuex";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+import { onMounted } from "vue";
 
 export default {
   name: "NavbarComponent",
@@ -87,6 +70,9 @@ export default {
   computed: {
     currentRouteName() {
       return this.$route.name;
+    },
+    currentRoutebreadcrumb() {
+      return this.$route.meta.breadcrumb;
     },
   },
   created() {
@@ -116,7 +102,9 @@ export default {
     },
   },
   setup() {
+    const route = useRoute();
     const { t } = useI18n();
+    onMounted(() => {});
     return { t };
   },
 };
