@@ -128,7 +128,7 @@ const constantRouterMap = [
         ],
       },
       {
-        path: "add-strategic/:name",
+        path: "add-strategic",
         name: "AddStrategic_Plan",
         component: FormStrategic_Plan,
         beforeEnter(to, from) {
